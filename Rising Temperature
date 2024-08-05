@@ -45,10 +45,6 @@ In 2015-01-04, the temperature was higher than the previous day (20 -> 30).
 
 
 Answer----
-SELECT id
-FROM(
-
-    SELECT id, temperature, LAG(temperature) OVER (ORDER BY recordDate) AS yesterd_temp
-    FROM Weather
-)sub
-WHERE temperature > yesterd_temp
+SELECT w1.id
+FROM Weather w1, Weather w2
+WHERE DATEDIFF(w1.recordDate, w2.recordDate) = 1 AND w1.temperature > w2.temperature;
